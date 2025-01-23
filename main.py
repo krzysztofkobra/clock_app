@@ -1,8 +1,14 @@
 import sys
+import os
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import QTimer, QTime
 from PyQt5.QtGui import QIcon
 from stoper_widget import Ui_Form as StoperUI
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 class StopwatchWindow(QWidget):
     def __init__(self):
@@ -10,15 +16,21 @@ class StopwatchWindow(QWidget):
         self.s = StoperUI()
         self.s.setupUi(self)
 
-        self.setWindowIcon(QIcon("res/img/clock.png"))
+        self.play_icon_path = resource_path("res/img/play.png")
+        self.pause_icon_path = resource_path("res/img/pause.png")
+        self.reset_icon_path = resource_path("res/img/reset.png")
+        self.clock_icon_path = resource_path("res/img/clock.png")
+
+        self.setWindowIcon(QIcon(self.clock_icon_path))
+        self.s.startButton.setIcon(QIcon(self.play_icon_path))
+        self.s.resetButton.setIcon(QIcon(self.reset_icon_path))
+        self.s.resetButton.setVisible(False)
+
         self.setWindowTitle("Stopwatch")
         self.setFixedSize(400, 500)
 
         self.timer = QTimer(self)
         self.elapsed_time = QTime(0, 0, 0)
-        self.s.startButton.setIcon(QIcon("res/img/play.png"))
-        self.s.resetButton.setIcon(QIcon("res/img/reset.png"))
-        self.s.resetButton.setVisible(False)
         self.isRunning = False
 
         self.timer.timeout.connect(self.update_time)
@@ -36,13 +48,13 @@ class StopwatchWindow(QWidget):
         if not self.timer.isActive():
             self.timer.start(1000)
         self.isRunning = True
-        self.s.startButton.setIcon(QIcon("res/img/pause.png"))
+        self.s.startButton.setIcon(QIcon(self.pause_icon_path))
         self.s.resetButton.setVisible(True)
 
     def pause(self):
         self.isRunning = False
         self.timer.stop()
-        self.s.startButton.setIcon(QIcon("res/img/play.png"))
+        self.s.startButton.setIcon(QIcon(self.play_icon_path))
 
     def reset(self):
         self.pause()
@@ -68,4 +80,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = StopwatchWindow()
     window.show()
-    app.exec_()
+    sys.exit(app.exec())
