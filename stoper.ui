@@ -15,9 +15,10 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(53, 53, 53);
-color: rgb(236, 236, 236);</string>
+color: rgb(236, 236, 236);
+</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="startButton">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -41,7 +42,7 @@ hover{
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="min">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -62,7 +63,7 @@ hover{
     <string>00</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="sec">
    <property name="geometry">
     <rect>
      <x>230</x>
@@ -106,23 +107,7 @@ hover{
     <enum>QFrame::Raised</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>165</x>
-     <y>375</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: transparent;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="hour">
    <property name="geometry">
     <rect>
      <x>140</x>
@@ -144,11 +129,10 @@ hover{
    </property>
   </widget>
   <zorder>frame</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_4</zorder>
+  <zorder>startButton</zorder>
+  <zorder>min</zorder>
+  <zorder>sec</zorder>
+  <zorder>hour</zorder>
  </widget>
  <resources/>
  <connections/>
