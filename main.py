@@ -17,12 +17,14 @@ class StopwatchWindow(QWidget):
         self.timer = QTimer(self)
         self.elapsed_time = QTime(0, 0, 0)
         self.s.startButton.setIcon(QIcon("res/img/play.png"))
+        self.s.resetButton.setIcon(QIcon("res/img/reset.png"))
+        self.s.resetButton.setVisible(False)
         self.isRunning = False
 
         self.timer.timeout.connect(self.update_time)
 
         self.s.startButton.clicked.connect(self.toggle_start_pause)
-        #self.s.resetButton.clicked.connect(self.reset)
+        self.s.resetButton.clicked.connect(self.reset)
 
     def toggle_start_pause(self):
         if self.isRunning:
@@ -35,6 +37,7 @@ class StopwatchWindow(QWidget):
             self.timer.start(1000)
         self.isRunning = True
         self.s.startButton.setIcon(QIcon("res/img/pause.png"))
+        self.s.resetButton.setVisible(True)
 
     def pause(self):
         self.isRunning = False
@@ -42,9 +45,11 @@ class StopwatchWindow(QWidget):
         self.s.startButton.setIcon(QIcon("res/img/play.png"))
 
     def reset(self):
-        self.timer.stop()
+        self.pause()
+        self.isRunning = False
         self.elapsed_time = QTime(0, 0, 0)
         self.update_labels()
+        self.s.resetButton.setVisible(False)
 
     def update_time(self):
         self.elapsed_time = self.elapsed_time.addSecs(1)

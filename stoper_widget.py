@@ -36,6 +36,7 @@ class Ui_Form(object):
         font = QtGui.QFont()
         font.setPointSize(36)
         self.min.setFont(font)
+
         self.min.setStyleSheet("background-color: transparent")
         self.min.setObjectName("min")
         self.sec = QtWidgets.QLabel(Form)
@@ -62,11 +63,23 @@ class Ui_Form(object):
         self.hour.setFont(font)
         self.hour.setStyleSheet("background-color: transparent")
         self.hour.setObjectName("hour")
+        self.resetButton = QtWidgets.QPushButton(Form)
+        self.resetButton.setGeometry(QtCore.QRect(275, 420, 40, 40))
+        self.resetButton.setStyleSheet("background-color: rgb(236, 236, 236);\n"
+"                border-radius: 15px;        \n"
+"               border: 2px solid rgb(236, 236, 236);\n"
+"hover{\n"
+"    background-color: rgb(175, 175, 175)\n"
+"}\n"
+"    ")
+        self.resetButton.setText("")
+        self.resetButton.setObjectName("resetButton")
         self.frame.raise_()
         self.startButton.raise_()
         self.min.raise_()
         self.sec.raise_()
         self.hour.raise_()
+        self.resetButton.raise_()
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
