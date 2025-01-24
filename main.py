@@ -10,12 +10,9 @@ def resource_path(relative_path):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
 
-class StopwatchWindow(QWidget):
+class ClockApp(QWidget):
     def __init__(self):
         super().__init__()
-
-        self.c = ClockUI()
-        self.c.setupUi(self)
 
         self.init_visuals()
         self.init_clocks()
@@ -28,27 +25,27 @@ class StopwatchWindow(QWidget):
             self.stopwatch_start()
 
     def stopwatch_start(self):
-        if not self.timer.isActive():
-            self.timer.start(1000)
+        if not self.stopwatch.isActive():
+            self.stopwatch.start(1000)
         self.isStopwatchRunning = True
         self.c.startButton.setIcon(QIcon(self.pause_icon_path))
         self.c.resetButton.setVisible(True)
 
     def stopwatch_pause(self):
         self.isStopwatchRunning = False
-        self.timer.stop()
+        self.stopwatch.stop()
         self.c.startButton.setIcon(QIcon(self.play_icon_path))
 
     def stopwatch_reset(self):
-        self.pause()
+        self.stopwatch_pause()
         self.isStopwatchRunning = False
         self.elapsed_time = QTime(0, 0, 0)
-        self.update_labels()
+        self.stopwatch_update_labels()
         self.c.resetButton.setVisible(False)
 
     def stopwatch_update_time(self):
         self.elapsed_time = self.elapsed_time.addSecs(1)
-        self.update_labels()
+        self.stopwatch_update_labels()
 
     def stopwatch_update_labels(self):
         hours = self.elapsed_time.hour()
@@ -60,6 +57,9 @@ class StopwatchWindow(QWidget):
         self.c.sec.setText(f"{seconds:02}")
 
     def init_visuals(self):
+        self.c = ClockUI()
+        self.c.setupUi(self)
+
         self.setWindowTitle("ClockApp")
         self.setFixedSize(400, 500)
 
@@ -86,6 +86,6 @@ class StopwatchWindow(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = StopwatchWindow()
+    window = ClockApp()
     window.show()
     sys.exit(app.exec())
