@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(53, 53, 53);
+color: rgb(236, 236, 236);
+</string>
+  </property>
+  <widget class="QPushButton" name="startButton">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>40</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 30px;        
+                border: 2px solid rgb(236, 236, 236);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="min">
+   <property name="geometry">
+    <rect>
+     <x>293</x>
+     <y>30</y>
+     <width>60</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="sec">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>70</y>
+     <width>40</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>25</y>
+     <width>150</width>
+     <height>110</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent; 
+    border: 5px solid rgb(236, 236, 236);     
+    border-radius: 50%;            
+    </string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hour">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>30</y>
+     <width>50</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>00:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="resetButton">
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>60</y>
+     <width>40</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 15px;        
+               border: 2px solid rgb(236, 236, 236);
+hover{
+	background-color: rgb(175, 175, 175)
+}
+	</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startButton2">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>210</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 30px;        
+                border: 2px solid rgb(236, 236, 236);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="resetButton2">
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>230</y>
+     <width>40</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 15px;        
+               border: 2px solid rgb(236, 236, 236);
+hover{
+	background-color: rgb(175, 175, 175)
+}
+	</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="min_2">
+   <property name="geometry">
+    <rect>
+     <x>293</x>
+     <y>200</y>
+     <width>60</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hour_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>200</y>
+     <width>50</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>00:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="sec_2">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>240</y>
+     <width>40</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>195</y>
+     <width>150</width>
+     <height>110</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent; 
+    border: 5px solid rgb(236, 236, 236);     
+    border-radius: 50%;            
+    </string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QPushButton" name="plusButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>50</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 15px;        
+               border: 2px solid rgb(236, 236, 236);
+hover{
+	background-color: rgb(175, 175, 175)
+}
+	</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="addAlarmButton">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>380</y>
+     <width>75</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 30px;        
+                border: 2px solid rgb(236, 236, 236);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="deleteAlarmButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>420</y>
+     <width>40</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 15px;        
+               border: 2px solid rgb(236, 236, 236);
+hover{
+	background-color: rgb(175, 175, 175)
+}
+	</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="confirmAlarmButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>375</y>
+     <width>40</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 15px;        
+               border: 2px solid rgb(236, 236, 236);
+hover{
+	background-color: rgb(175, 175, 175)
+}
+	</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="min_3">
+   <property name="geometry">
+    <rect>
+     <x>298</x>
+     <y>365</y>
+     <width>60</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hour_3">
+   <property name="geometry">
+    <rect>
+     <x>255</x>
+     <y>365</y>
+     <width>50</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>00:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="sec_3">
+   <property name="geometry">
+    <rect>
+     <x>305</x>
+     <y>405</y>
+     <width>40</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;</string>
+   </property>
+   <property name="text">
+    <string>00</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>360</y>
+     <width>150</width>
+     <height>110</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent; 
+    border: 5px solid rgb(236, 236, 236);     
+    border-radius: 50%;            
+    </string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>startButton</zorder>
+  <zorder>min</zorder>
+  <zorder>sec</zorder>
+  <zorder>hour</zorder>
+  <zorder>resetButton</zorder>
+  <zorder>startButton2</zorder>
+  <zorder>resetButton2</zorder>
+  <zorder>min_2</zorder>
+  <zorder>hour_2</zorder>
+  <zorder>sec_2</zorder>
+  <zorder>frame_2</zorder>
+  <zorder>addAlarmButton</zorder>
+  <zorder>deleteAlarmButton</zorder>
+  <zorder>confirmAlarmButton</zorder>
+  <zorder>min_3</zorder>
+  <zorder>hour_3</zorder>
+  <zorder>sec_3</zorder>
+  <zorder>frame_3</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -3,7 +3,7 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import QTimer, QTime
 from PyQt5.QtGui import QIcon
-from stoper_widget import Ui_Form as StoperUI
+from clock_style import Ui_Form as ClockUI
 
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
@@ -13,68 +13,76 @@ def resource_path(relative_path):
 class StopwatchWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.s = StoperUI()
-        self.s.setupUi(self)
+
+        self.c = ClockUI()
+        self.c.setupUi(self)
+
+        self.init_visuals()
+        self.init_clocks()
+        self.init_connections()
+
+    def stopwatch_toggle_start_pause(self):
+        if self.isStopwatchRunning:
+            self.stopwatch_pause()
+        else:
+            self.stopwatch_start()
+
+    def stopwatch_start(self):
+        if not self.timer.isActive():
+            self.timer.start(1000)
+        self.isStopwatchRunning = True
+        self.c.startButton.setIcon(QIcon(self.pause_icon_path))
+        self.c.resetButton.setVisible(True)
+
+    def stopwatch_pause(self):
+        self.isStopwatchRunning = False
+        self.timer.stop()
+        self.c.startButton.setIcon(QIcon(self.play_icon_path))
+
+    def stopwatch_reset(self):
+        self.pause()
+        self.isStopwatchRunning = False
+        self.elapsed_time = QTime(0, 0, 0)
+        self.update_labels()
+        self.c.resetButton.setVisible(False)
+
+    def stopwatch_update_time(self):
+        self.elapsed_time = self.elapsed_time.addSecs(1)
+        self.update_labels()
+
+    def stopwatch_update_labels(self):
+        hours = self.elapsed_time.hour()
+        minutes = self.elapsed_time.minute()
+        seconds = self.elapsed_time.second()
+
+        self.c.hour.setText(f"{hours:02}:")
+        self.c.min.setText(f"{minutes:02}")
+        self.c.sec.setText(f"{seconds:02}")
+
+    def init_visuals(self):
+        self.setWindowTitle("ClockApp")
+        self.setFixedSize(400, 500)
 
         self.play_icon_path = resource_path("res/img/play.png")
         self.pause_icon_path = resource_path("res/img/pause.png")
         self.reset_icon_path = resource_path("res/img/reset.png")
         self.clock_icon_path = resource_path("res/img/clock.png")
+        self.plus_icon_path = resource_path("res/img/plus.png")
 
         self.setWindowIcon(QIcon(self.clock_icon_path))
-        self.s.startButton.setIcon(QIcon(self.play_icon_path))
-        self.s.resetButton.setIcon(QIcon(self.reset_icon_path))
-        self.s.resetButton.setVisible(False)
+        self.c.startButton.setIcon(QIcon(self.play_icon_path))
+        self.c.resetButton.setIcon(QIcon(self.reset_icon_path))
+        self.c.resetButton.setVisible(False)
 
-        self.setWindowTitle("Stopwatch")
-        self.setFixedSize(400, 500)
+    def init_connections(self):
+        self.stopwatch.timeout.connect(self.stopwatch_update_time)
+        self.c.startButton.clicked.connect(self.stopwatch_toggle_start_pause)
+        self.c.resetButton.clicked.connect(self.stopwatch_reset)
 
-        self.timer = QTimer(self)
+    def init_clocks(self):
+        self.stopwatch = QTimer(self)
         self.elapsed_time = QTime(0, 0, 0)
-        self.isRunning = False
-
-        self.timer.timeout.connect(self.update_time)
-
-        self.s.startButton.clicked.connect(self.toggle_start_pause)
-        self.s.resetButton.clicked.connect(self.reset)
-
-    def toggle_start_pause(self):
-        if self.isRunning:
-            self.pause()
-        else:
-            self.start()
-
-    def start(self):
-        if not self.timer.isActive():
-            self.timer.start(1000)
-        self.isRunning = True
-        self.s.startButton.setIcon(QIcon(self.pause_icon_path))
-        self.s.resetButton.setVisible(True)
-
-    def pause(self):
-        self.isRunning = False
-        self.timer.stop()
-        self.s.startButton.setIcon(QIcon(self.play_icon_path))
-
-    def reset(self):
-        self.pause()
-        self.isRunning = False
-        self.elapsed_time = QTime(0, 0, 0)
-        self.update_labels()
-        self.s.resetButton.setVisible(False)
-
-    def update_time(self):
-        self.elapsed_time = self.elapsed_time.addSecs(1)
-        self.update_labels()
-
-    def update_labels(self):
-        self.hours = self.elapsed_time.hour()
-        self.minutes = self.elapsed_time.minute()
-        self.seconds = self.elapsed_time.second()
-
-        self.s.hour.setText(f"{self.hours:02}:")
-        self.s.min.setText(f"{self.minutes:02}")
-        self.s.sec.setText(f"{self.seconds:02}")
+        self.isStopwatchRunning = False
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
