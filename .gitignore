@@ -1,2 +1,5 @@
 .idea/
 __pycache__/
+alarm.ui
+timer.ui
+clock.ui
