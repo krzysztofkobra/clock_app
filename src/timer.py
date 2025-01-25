@@ -28,9 +28,9 @@ class Timer(QDialog):
         self.setWindowTitle("AddTimer")
         self.setFixedSize(300, 300)
 
-        self.play_icon_path = resource_path("../res/img/play.png")
-        self.reset_icon_path = resource_path("../res/img/reset.png")
-        self.clock_icon_path = resource_path("../res/img/clock.png")
+        self.play_icon_path = resource_path("res/img/play.png")
+        self.reset_icon_path = resource_path("res/img/reset.png")
+        self.clock_icon_path = resource_path("res/img/clock.png")
 
         self.setWindowIcon(QIcon(self.clock_icon_path))
         self.t.confirmTimer.setIcon(QIcon(self.play_icon_path))
