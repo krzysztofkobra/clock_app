@@ -82,7 +82,7 @@ hover{
 text-align: center;</string>
    </property>
    <property name="text">
-    <string>00:00</string>
+    <string>00:00:00</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -181,6 +181,13 @@ background-color: transparent;</string>
     <enum>QFrame::Raised</enum>
    </property>
   </widget>
+  <zorder>frame</zorder>
+  <zorder>confirmTimer</zorder>
+  <zorder>resetTimer</zorder>
+  <zorder>time</zorder>
+  <zorder>plusHalf</zorder>
+  <zorder>plusOne</zorder>
+  <zorder>plusFive</zorder>
  </widget>
  <resources/>
  <connections/>

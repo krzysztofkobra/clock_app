@@ -86,6 +86,13 @@ class Ui_Dialog(object):
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
+        self.frame.raise_()
+        self.confirmTimer.raise_()
+        self.resetTimer.raise_()
+        self.time.raise_()
+        self.plusHalf.raise_()
+        self.plusOne.raise_()
+        self.plusFive.raise_()
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -93,7 +100,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.time.setText(_translate("Dialog", "00:00"))
+        self.time.setText(_translate("Dialog", "00:00:00"))
         self.plusHalf.setText(_translate("Dialog", "+0:30"))
         self.plusOne.setText(_translate("Dialog", "+1:00"))
         self.plusFive.setText(_translate("Dialog", "+5:00"))
