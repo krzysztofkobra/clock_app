@@ -53,6 +53,8 @@ class ClockApp(QWidget):
 
     def init_connections(self):
         self.stopwatch.timeout.connect(self.stopwatch_update_time)
+        self.timer.timeout.connect(self.timer_tick)
+
         self.c.startButton.clicked.connect(self.stopwatch_toggle_start_pause)
         self.c.resetButton.clicked.connect(self.stopwatch_reset)
 
@@ -63,6 +65,8 @@ class ClockApp(QWidget):
 
     def init_clocks(self):
         self.stopwatch = QTimer(self)
+        self.timer = QTimer(self)
+
         self.elapsed_time = QTime(0, 0, 0)
         self.timer_time = QTime(0, 0, 0)
 
@@ -136,8 +140,10 @@ class ClockApp(QWidget):
         self.c.startTimer.setIcon(QIcon(self.play_icon_path))
 
     def timer_start(self):
-        self.isTimerRunning = True
-        self.c.startTimer.setIcon(QIcon(self.pause_icon_path))
+        if not self.timer.isActive():
+            self.timer.start(1000)
+            self.isTimerRunning = True
+            self.c.startTimer.setIcon(QIcon(self.pause_icon_path))
 
     def timer_reset(self):
         self.timer_pause()
@@ -145,6 +151,22 @@ class ClockApp(QWidget):
         self.timer_update_labels()
         self.c.resetTimer.setVisible(False)
 
+    def timer_stop(self):
+        print("a loud sound boom")
+        self.timer.stop()
+        self.c.startTimer.setIcon(QIcon(self.play_icon_path))
+        self.c.resetTimer.setVisible(False)
+        QMessageBox.information(self, "Timer", "Time's up!")
+
+    def timer_tick(self):
+        if self.timer_time == QTime(0, 0, 0):
+            self.timer_stop()
+            return
+
+        self.timer_time = self.timer_time.addSecs(-1)
+        self.timer_update_labels()
+
     def add_30(self):
         self.timer_time = self.timer_time.addSecs(30)
         self.timer_update_labels()
+        self.c.resetTimer.setVisible(True)
