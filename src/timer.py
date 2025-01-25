@@ -1,7 +1,7 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QDialog
+from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtCore import QTimer, QTime
 from PyQt5.QtGui import QIcon
 
@@ -28,11 +28,9 @@ class Timer(QDialog):
         self.setWindowTitle("AddTimer")
         self.setFixedSize(300, 300)
 
-        self.play_icon_path = resource_path("res/img/play.png")
-        self.pause_icon_path = resource_path("res/img/pause.png")
-        self.reset_icon_path = resource_path("res/img/reset.png")
-        self.clock_icon_path = resource_path("res/img/clock.png")
-        self.plus_icon_path = resource_path("res/img/plus.png")
+        self.play_icon_path = resource_path("../res/img/play.png")
+        self.reset_icon_path = resource_path("../res/img/reset.png")
+        self.clock_icon_path = resource_path("../res/img/clock.png")
 
         self.setWindowIcon(QIcon(self.clock_icon_path))
         self.t.confirmTimer.setIcon(QIcon(self.play_icon_path))
