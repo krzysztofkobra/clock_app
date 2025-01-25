@@ -267,33 +267,6 @@ hover{
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="plusButton">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>60</y>
-      <width>50</width>
-      <height>35</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Arial Rounded MT Bold</family>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(236, 236, 236);
-                border-radius: 15px;        
-               border: 2px solid rgb(236, 236, 236);
-color: rgb(53, 53, 53);</string>
-    </property>
-    <property name="text">
-     <string>+0:30</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QPushButton" name="addAlarm">
    <property name="geometry">
@@ -470,6 +443,33 @@ hover{
     <string/>
    </property>
   </widget>
+  <widget class="QPushButton" name="plusButton">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>255</y>
+     <width>50</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(236, 236, 236);
+                border-radius: 15px;        
+               border: 2px solid rgb(236, 236, 236);
+color: rgb(53, 53, 53);</string>
+   </property>
+   <property name="text">
+    <string>+0:30</string>
+   </property>
+  </widget>
   <zorder>frame</zorder>
   <zorder>startButton</zorder>
   <zorder>min</zorder>
@@ -490,6 +490,7 @@ hover{
   <zorder>sec_3</zorder>
   <zorder>frame_3</zorder>
   <zorder>resetTimer</zorder>
+  <zorder>plusButton</zorder>
  </widget>
  <resources/>
  <connections/>
