@@ -1,9 +1,10 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog
-from PyQt5.QtCore import QTimer, QTime
+from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog, QFileDialog
+from PyQt5.QtCore import QTimer, QTime, QUrl, QSettings, Qt
 from PyQt5.QtGui import QIcon
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 
 from clock_style import Ui_Form as ClockUI
 
@@ -28,7 +29,7 @@ class ClockApp(QWidget):
         self.c.setupUi(self)
 
         self.setWindowTitle("ClockApp")
-        self.setFixedSize(400, 500)
+        self.setFixedSize(400, 550)
 
         self.play_icon_path = resource_path("res/img/play.png")
         self.pause_icon_path = resource_path("res/img/pause.png")
@@ -37,6 +38,7 @@ class ClockApp(QWidget):
         self.plus_icon_path = resource_path("res/img/plus.png")
         self.circle_icon_path = resource_path("res/img/circle.png")
         self.cross_icon_path = resource_path("res/img/cross.png")
+        settings_icon_path = resource_path("res/img/settings.png")
 
         self.setWindowIcon(QIcon(self.clock_icon_path))
         self.c.startButton.setIcon(QIcon(self.play_icon_path))
@@ -55,6 +57,8 @@ class ClockApp(QWidget):
         self.c.deleteAlarm.setVisible(False)
         self.c.alarmSwitch.setVisible(False)
 
+        self.c.setRingPhoneButton.setIcon(QIcon(settings_icon_path))
+
     def init_connections(self):
         self.stopwatch.timeout.connect(self.stopwatch_update_time)
         self.timer.timeout.connect(self.timer_tick)
@@ -72,6 +76,9 @@ class ClockApp(QWidget):
         self.c.alarmSwitch.clicked.connect(self.alarm_switch_state)
         self.c.deleteAlarm.clicked.connect(self.alarm_delete)
 
+        self.c.setRingPhoneButton.clicked.connect(self.set_ringtone)
+        self.set_ringtone_name()
+
     def init_clocks(self):
         self.stopwatch = QTimer(self)
         self.timer = QTimer(self)
@@ -86,6 +93,13 @@ class ClockApp(QWidget):
         self.isTimerRunning = False
 
         self.c.startTimer.setEnabled(False)
+
+        self.player = QMediaPlayer(self)
+        self.settings = QSettings("krzysztofkobra", "ClockApp")
+        self.ringtone = self.settings.value("last_ringtone", None)
+        self.default_ringtone = resource_path("res/audio/default.mp3")
+        if self.ringtone is None:
+            self.ringtone = self.default_ringtone
 
     def stopwatch_toggle_start_pause(self):
         if self.isStopwatchRunning:
@@ -109,38 +123,21 @@ class ClockApp(QWidget):
         self.stopwatch_pause()
         self.isStopwatchRunning = False
         self.elapsed_time = QTime(0, 0, 0)
-        self.stopwatch_update_labels()
+        self.update_labels(self.elapsed_time, self.c.hour, self.c.min, self.c.sec)
         self.c.resetButton.setVisible(False)
 
     def stopwatch_update_time(self):
         self.elapsed_time = self.elapsed_time.addSecs(1)
-        self.stopwatch_update_labels()
-
-    def stopwatch_update_labels(self):
-        hours = self.elapsed_time.hour()
-        minutes = self.elapsed_time.minute()
-        seconds = self.elapsed_time.second()
-
-        self.c.hour.setText(f"{hours:02}:")
-        self.c.min.setText(f"{minutes:02}")
-        self.c.sec.setText(f"{seconds:02}")
+        self.update_labels(self.elapsed_time, self.c.hour, self.c.min, self.c.sec)
 
     def open_timer_dialog(self):
         dialog = Timer()
         if dialog.exec() == QDialog.Accepted:
             self.timer_time = dialog.get_timer_time()
-            self.timer_update_labels()
-            self.c.resetTimer.setVisible(True)
-            self.c.startTimer.setEnabled(True)
-
-    def timer_update_labels(self):
-        self.timer_h = self.timer_time.hour()
-        self.timer_m = self.timer_time.minute()
-        self.timer_s = self.timer_time.second()
-
-        self.c.hour_2.setText(f"{self.timer_h:02}:")
-        self.c.min_2.setText(f"{self.timer_m:02}")
-        self.c.sec_2.setText(f"{self.timer_s:02}")
+            self.update_labels(self.timer_time, self.c.hour_2, self.c.min_2, self.c.sec_2)
+            if self.timer_time != QTime(0, 0, 0):
+                self.c.resetTimer.setVisible(True)
+                self.c.startTimer.setEnabled(True)
 
     def timer_toggle_start_pause(self):
         if self.isTimerRunning:
@@ -161,18 +158,19 @@ class ClockApp(QWidget):
     def timer_reset(self):
         self.timer_pause()
         self.timer_time = QTime(0, 0, 0)
-        self.timer_update_labels()
+        self.update_labels(self.timer_time, self.c.hour_2, self.c.min_2, self.c.sec_2)
 
         self.c.resetTimer.setVisible(False)
+        self.c.resetTimer.setEnabled(False)
+        self.c.startTimer.setEnabled(False)
 
     def timer_stop(self):
-        print("a loud sound boom")
         self.timer.stop()
+        self.handle_ringtone()
 
         self.c.startTimer.setIcon(QIcon(self.play_icon_path))
         self.c.resetTimer.setVisible(False)
-
-        QMessageBox.information(self, "Timer", "Time's up!")
+        self.c.resetTimer.setEnabled(False)
 
     def timer_tick(self):
         if self.timer_time == QTime(0, 0, 0):
@@ -181,19 +179,20 @@ class ClockApp(QWidget):
             return
 
         self.timer_time = self.timer_time.addSecs(-1)
-        self.timer_update_labels()
+        self.update_labels(self.timer_time, self.c.hour_2, self.c.min_2, self.c.sec_2)
 
     def add_30(self):
         self.timer_time = self.timer_time.addSecs(30)
-        self.timer_update_labels()
+        self.update_labels(self.timer_time, self.c.hour_2, self.c.min_2, self.c.sec_2)
         self.c.resetTimer.setVisible(True)
+        self.c.resetTimer.setEnabled(True)
         self.c.startTimer.setEnabled(True)
 
     def open_alarm_dialog(self):
         dialog = Alarm()
         if dialog.exec() == QDialog.Accepted:
             self.alarm_time = dialog.get_alarm_time()
-            self.alarm_update_labels()
+            self.update_labels(self.alarm_time, self.c.hour_3, self.c.min_3, self.c.sec_3)
 
             self.c.deleteAlarm.setVisible(True)
             self.c.alarmSwitch.setVisible(True)
@@ -205,15 +204,6 @@ class ClockApp(QWidget):
 
             self.isAlarmOn = True
             self.c.alarmSwitch.setIcon(QIcon(self.circle_icon_path))
-
-    def alarm_update_labels(self):
-        self.alarm_h = self.alarm_time.hour()
-        self.alarm_m = self.alarm_time.minute()
-        self.alarm_s = self.alarm_time.second()
-
-        self.c.hour_3.setText(f"{self.alarm_h:02}:")
-        self.c.min_3.setText(f"{self.alarm_m:02}")
-        self.c.sec_3.setText(f"{self.alarm_s:02}")
 
     def alarm_switch_state(self):
         if self.isAlarmOn:
@@ -230,13 +220,12 @@ class ClockApp(QWidget):
         self.c.deleteAlarm.setVisible(False)
         self.c.alarmSwitch.setVisible(False)
 
-        self.alarm_update_labels()
+        self.update_labels(self.alarm_time, self.c.hour_3, self.c.min_3, self.c.sec_3)
 
         QMessageBox.information(self, "Alarm", "Alarm deleted!")
 
     def alarm(self):
         current_time = QTime.currentTime()
-
         current_hours = current_time.hour()
         current_minutes = current_time.minute()
         current_seconds = current_time.second()
@@ -245,15 +234,64 @@ class ClockApp(QWidget):
             self.alarm_m == current_minutes and
             self.alarm_s == current_seconds and
             self.isAlarmOn):
-            print("a loud sound boom")
 
             self.isAlarmOn = False
             self.alarm_time = QTime(0, 0, 0)
             self.alarm_timer.stop()
 
+            self.handle_ringtone()
+
             self.c.deleteAlarm.setVisible(False)
             self.c.alarmSwitch.setVisible(False)
 
-            self.alarm_update_labels()
+            self.update_labels(self.alarm_time, self.c.hour_3, self.c.min_3, self.c.sec_3)
 
-            QMessageBox.information(self, "Timer", "Time's up!")
+    def update_labels(self, time_obj, hour_label, min_label, sec_label):
+        h = time_obj.hour()
+        m = time_obj.minute()
+        s = time_obj.second()
+        hour_label.setText(f"{h:02}:")
+        min_label.setText(f"{m:02}")
+        sec_label.setText(f"{s:02}")
+
+    def set_ringtone(self):
+        ringtone_file, _ = QFileDialog.getOpenFileName(
+            self, "Choose ringtone file", "", "Audio files (*.mp3 *.wav)"
+        )
+
+        if ringtone_file:
+            self.settings.setValue("last_ringtone", ringtone_file)
+            self.ringtone = ringtone_file
+            print(f"Ringtone file selected: {ringtone_file}")
+            self.set_ringtone_name()
+        else:
+            print("No ringtone file selected.")
+
+    #spaghetti code
+    def handle_ringtone(self):
+        self.player.setMedia(QMediaContent(QUrl.fromLocalFile(self.ringtone)))
+        self.player.play()
+
+        msg = QMessageBox()
+        msg.setWindowTitle("Alarm!")
+        msg.setText("Time's up!")
+        msg.setStandardButtons(QMessageBox.Ok)
+
+        self.player.mediaStatusChanged.connect(self.handle_media_status)
+
+        msg.exec()
+
+        self.player.mediaStatusChanged.disconnect(self.handle_media_status)
+        self.player.stop()
+
+    def handle_media_status(self, status):
+        if status == QMediaPlayer.EndOfMedia:
+            self.player.stop()
+            self.player.play()
+
+    def set_ringtone_name(self):
+        filename = os.path.basename(self.ringtone)
+        name = filename.rsplit('.', 1)[0]
+        fm = self.c.currentRingPhone.fontMetrics()
+        elided = fm.elidedText(name, Qt.ElideRight, 250)
+        self.c.currentRingPhone.setText(elided)

@@ -56,3 +56,4 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.alarmValue.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-weight:600;\">00:00:00</span></p></body></html>"))

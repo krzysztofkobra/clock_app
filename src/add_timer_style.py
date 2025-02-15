@@ -40,12 +40,14 @@ class Ui_Dialog(object):
         self.resetTimer.setText("")
         self.resetTimer.setObjectName("resetTimer")
         self.time = QtWidgets.QLabel(Dialog)
-        self.time.setGeometry(QtCore.QRect(40, 30, 225, 75))
+        self.time.setGeometry(QtCore.QRect(35, 30, 230, 75))
         font = QtGui.QFont()
         font.setPointSize(28)
         self.time.setFont(font)
         self.time.setStyleSheet("color: white;\n"
-"text-align: center;")
+"text-align: center;\n"
+" border-radius: 15px;\n"
+"")
         self.time.setAlignment(QtCore.Qt.AlignCenter)
         self.time.setObjectName("time")
         self.plusHalf = QtWidgets.QPushButton(Dialog)
