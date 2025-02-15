@@ -4,3 +4,4 @@ alarm.ui
 timer.ui
 clock.ui
 dist/
+build/
