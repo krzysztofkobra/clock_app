@@ -137,6 +137,7 @@ class ClockApp(QWidget):
             self.update_labels(self.timer_time, self.c.hour_2, self.c.min_2, self.c.sec_2)
             if self.timer_time != QTime(0, 0, 0):
                 self.c.resetTimer.setVisible(True)
+                self.c.resetTimer.setEnabled(True)
                 self.c.startTimer.setEnabled(True)
 
     def timer_toggle_start_pause(self):
@@ -146,6 +147,7 @@ class ClockApp(QWidget):
             self.timer_start()
 
     def timer_pause(self):
+        self.timer.stop()
         self.isTimerRunning = False
         self.c.startTimer.setIcon(QIcon(self.play_icon_path))
 
