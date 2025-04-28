@@ -2,7 +2,7 @@
 
 **ClockApp** is a desktop application that combines a stopwatch, alarm, and timer into one convenient tool. Personalize your experience by setting your own ringtone to accompany alarms and timers.
 
-## What's New in Version 1.1.0:
+## What's New in Version 1.1.1:
 - **Custom Ringtone** – Choose and set your own ringtone for alarms and timers.
 - **Stopwatch, Timer, and Alarm** – All essential time management tools in one app.
 - **Simple Interface** – Easy-to-use design for quick access to all features.
